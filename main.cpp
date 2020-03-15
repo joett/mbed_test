@@ -193,7 +193,7 @@ int main(void)
 
     printf("\n ***** mbed_kbd_test *****\n");
 
-    kbd_tread.start(callback(&kbd_event_q, &EventQueue::dispatch_forever));        // Let kbd få get its own Thread
+    kbd_tread.start(callback(&kbd_event_q, &EventQueue::dispatch_forever));        // Let kbd get its own Thread
     kbd_int.rise(kbd_event_q.event(kbd_int_handler));    // The 'rise' handler will execute in the context of 'kbd_tread'
 
     while(true){
