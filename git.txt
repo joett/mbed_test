@@ -1,0 +1,7 @@
+git clone https://github.com/joett/mbed_test.git
+
+git status
+git add --all
+git commit -m "added 1_my_targets"
+git push origin master
+
