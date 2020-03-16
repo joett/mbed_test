@@ -1,6 +1,6 @@
 # How to switch between interrupt input and analog input on the same pin?
 
-
+It is the "int decode_kbd();" function that I am a bit lost in.
 
 I want to connect a "one pin" 12key keypad to my Mbed board. The keypad sends a High pulse when a key is pressed, after some mS, the signal falls down to a level that is determent by the key pressed. It falls to zero when the key is released.
 
@@ -18,6 +18,8 @@ In other words, can I change the pin configuration / functionality "on the fly"?
 I think the code could run on any board with a key input and analog input on the same pin (but the analog value wil not mean anything without my keypad).
 
 
+
 One more question:
 	What do I have to do with the serial line (in my examle code) to enable Mbed to enter deep sleep mode?
 
+The idea is to have a command to turn off the serial line so the target can enter sleep mode, and use the keypad to enable it again if I want to.
