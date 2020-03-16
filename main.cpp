@@ -64,6 +64,7 @@ static int cmd_sys_info(int argc, char **argv)
     printf("!MBED_SYS_STATS_ENABLED\n");
 #endif
 
+    
 #if defined(MBED_HEAP_STATS_ENABLED)
     mbed_stats_heap_t    heap_stats;
                 // Collect and print heap stats
@@ -73,6 +74,7 @@ static int cmd_sys_info(int argc, char **argv)
 #else
     printf("!MBED_HEAP_STATS_ENABLED\n");
 #endif
+
 
 #if defined(MBED_THREAD_STATS_ENABLED)
 #define MAX_TR            10
@@ -105,7 +107,7 @@ static int cmd_sys_info(int argc, char **argv)
     printf(" DeepSleep: %08lld", cpu_stats.deep_sleep_time);
     printf(" Idle: %08d%% Usage: %d%%\r\n", idle, usage);
 #else
-    printf("!MBED_CPU_STATS_ENABLED\n");
+    printf("!MBED_CPU_STATS_ENABLED\n");    
 #endif
 
     return CMDLINE_RETCODE_SUCCESS;
@@ -143,23 +145,27 @@ static int cmd_noop(int argc, char **argv)
  * *****************************************************************************
  */
 
-#define ADC_KBD_SAMPLES 10
-
 int decode_kbd()
 {
+// 	Her I want to change the pin mode to Analog In
+// 	But I find no way to do it correctly
 //     AnalogIn ainn(KBD_IN);	// When I do this, I get only one interrupt.
 
     uint16_t adc_sample;
 
     thread_sleep_for(10);    // 10ms
 
-    adc_sample = 1234;	// ainn.read_u16();
+// 	Her I want to Read the Analog value from the same pin that gave the interrupt
+//     adc_sample = ainn.read_u16();
+    adc_sample = 1234; // Fake a walue just to test the interrupt
 
     thread_sleep_for(3);    // 3ms
 
-//    InterruptIn kbd_int(KBD_IN, PullDown);	// This is possibly Wrong, and have no effect
+// 	Her I want to change the pin mode to interrupt In and continue reciveing interrupts
+// 	But I find no way to do it correctly
+//     InterruptIn kbd_int(KBD_IN, PullDown);	// This is most likely Wrong, and have no effect
 
-    return(adc_sample);
+	return(adc_sample);
 }
 
 InterruptIn kbd_int(KBD_IN, PullDown);
@@ -167,7 +173,7 @@ InterruptIn kbd_int(KBD_IN, PullDown);
 DigitalOut led1(LED1);
 DigitalOut led2(LED2);
 
-EventQueue    kbd_event_q(3 * EVENTS_EVENT_SIZE);    // Let kbd get its own EventQueue
+EventQueue kbd_event_q(3 * EVENTS_EVENT_SIZE);    // Let kbd get its own EventQueue
 Thread kbd_tread;                                    // Let kbd get its own Thread
 
 void kbd_int_handler()
@@ -193,7 +199,7 @@ int main(void)
 
     printf("\n ***** mbed_kbd_test *****\n");
 
-    kbd_tread.start(callback(&kbd_event_q, &EventQueue::dispatch_forever));        // Let kbd get its own Thread
+    kbd_tread.start(callback(&kbd_event_q, &EventQueue::dispatch_forever));        // Let kbd få get its own Thread
     kbd_int.rise(kbd_event_q.event(kbd_int_handler));    // The 'rise' handler will execute in the context of 'kbd_tread'
 
     while(true){
