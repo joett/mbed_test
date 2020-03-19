@@ -1,0 +1,4 @@
+cd ~/dok/1_sw/1_nRF5/1_mbed
+mbed compile -t GCC_ARM -m EE02 --source mbed_test --source mbed-os --build BUILD/mbed_test
+nrfjprog -f nrf52 --program ./BUILD/mbed_test/mbed_test.hex --sectorerase
+nrfjprog -f nrf52 --reset
