@@ -1,0 +1,25 @@
+{
+    "macros": [
+        "MEM_ALLOC=malloc",
+        "MEM_FREE=free"
+    ],
+    "target_overrides": {
+        "*": {
+            "platform.heap-stats-enabled": true,
+            "platform.stack-stats-enabled": true,
+            "platform.sys-stats-enabled": true,
+            "platform.cpu-stats-enabled": true,
+            "platform.all-stats-enabled": true,
+            "platform.thread-stats-enabled": true,
+            "platform.stdio-buffered-serial": true,
+            "mbed-trace.enable": 1,
+            "platform.stdio-convert-newlines": true,
+            "platform.stdio-baud-rate": 115200,
+            "platform.default-serial-baud-rate": 115200,
+            "platform.stdio-flush-at-exit": true,
+            "drivers.uart-serial-rxbuf-size": 768,
+            "target.macros_add": ["MBED_TICKLESS"]
+        }
+    }
+}
+
